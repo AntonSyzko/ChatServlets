@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - ordersdb@localhost" uuid="1a5ece65-fa73-4e83-8663-043f8053b49a">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>ordersdb.*</schema-pattern>
+      <default-schemas>ordersdb.*</default-schemas>
+    </data-source>
+    <data-source name="MySQL - ordersdb@173.194.226.57" uuid="1e6b5d05-f4f9-45da-bbd6-32a3b820e243">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>ordersdb.*</schema-pattern>
+      <default-schemas>information_schema.* mysql.* ordersdb.*</default-schemas>
+    </data-source>
+  </component>
+</project>
