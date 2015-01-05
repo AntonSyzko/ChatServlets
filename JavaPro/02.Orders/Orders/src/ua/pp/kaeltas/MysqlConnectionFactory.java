@@ -12,7 +12,7 @@ public class MysqlConnectionFactory {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ordersdb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
-    
+
     //private Connection conn = null;
 
     public synchronized static Connection createConnection() {
