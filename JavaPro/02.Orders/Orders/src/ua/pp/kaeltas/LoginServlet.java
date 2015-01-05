@@ -1,5 +1,7 @@
 package ua.pp.kaeltas;
 
+import com.google.appengine.api.search.Results;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -47,7 +49,7 @@ public class LoginServlet extends HttpServlet {
                 conn.close();
             }
         } catch (Exception e) {
-            response.sendError(333, "Sorry, something goes wrong.." + e.getMessage());
+            response.sendError(333, "Sorry, something goes wrong..");
             e.printStackTrace();
         }
 

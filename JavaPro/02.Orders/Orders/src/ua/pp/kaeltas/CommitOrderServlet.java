@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kaeltas on 23.12.14.
@@ -21,9 +22,9 @@ public class CommitOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("login") != null) {
-            List<Product> shoppingCartList = null;
-            if (session.getAttribute("shoppingCartList") != null) {
-                shoppingCartList = (List<Product>) session.getAttribute("shoppingCartList");
+            Map<Product, Integer> shoppingCartMap = null;
+            if (session.getAttribute("shoppingCartMap") != null) {
+                shoppingCartMap = (Map<Product, Integer>) session.getAttribute("shoppingCartMap");
 
                 try {
                     Connection conn = MysqlConnectionFactory.createConnection();
@@ -44,16 +45,17 @@ public class CommitOrderServlet extends HttpServlet {
                                         ResultSet rs = preparedStatement.getGeneratedKeys();
                                         if (rs.next()) {
                                             int lastid = rs.getInt(1);
-                                            preparedStatement = conn.prepareStatement("INSERT INTO OrderData (order_id, product_id) VALUES (?, ?)");
-                                            for (Product product : shoppingCartList) {
+                                            preparedStatement = conn.prepareStatement("INSERT INTO OrderData (order_id, product_id, product_count) VALUES (?, ?, ?)");
+                                            for (Map.Entry<Product, Integer> entry : shoppingCartMap.entrySet()) {
                                                 preparedStatement.setInt(1, lastid);
-                                                preparedStatement.setInt(2, product.id);
+                                                preparedStatement.setInt(2, entry.getKey().id);
+                                                preparedStatement.setInt(3, entry.getValue());
                                                 preparedStatement.executeUpdate();
                                             }
                                         }
 
                                         conn.commit();
-                                        session.setAttribute("shoppingCartList", null);
+                                        session.setAttribute("shoppingCartMap", null);
                                         response.sendRedirect("/successorder.jsp");
                                         conn.setAutoCommit(true);
                                     } catch (Exception e) {

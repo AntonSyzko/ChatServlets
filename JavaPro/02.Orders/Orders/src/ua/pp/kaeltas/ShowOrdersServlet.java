@@ -33,7 +33,7 @@ public class ShowOrdersServlet extends HttpServlet {
                             " FROM `User` u, `Order` o" +
                             " WHERE o.user_id = u.id";
 
-                    String query2 = "SELECT p.id, p.name, p.price" +
+                    String query2 = "SELECT p.id, p.name, p.price, od.product_count" +
                             " FROM `OrderData` od, Product p" +
                             " WHERE od.product_id = p.id" +
                             " AND od.order_id = ?";
@@ -56,7 +56,7 @@ public class ShowOrdersServlet extends HttpServlet {
                             product.name = resultSet1.getString(2);
                             product.price = resultSet1.getString(3);
 
-                            order.orderData.add(product);
+                            order.orderData.put(product, resultSet1.getInt(4));
                         }
 
                         orderList.add(order);

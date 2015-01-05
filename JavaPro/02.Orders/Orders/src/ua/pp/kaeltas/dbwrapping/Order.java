@@ -1,7 +1,9 @@
 package ua.pp.kaeltas.dbwrapping;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kaeltas on 23.12.14.
@@ -11,10 +13,10 @@ public class Order {
     public int user_id;
     public String login;
     public String datetime;
-    public List<Product> orderData;
+    public Map<Product, Integer> orderData;
 
     public Order() {
-        orderData = new ArrayList<Product>();
+        orderData = new LinkedHashMap<Product, Integer>();
     }
 
     public int getId() {
@@ -29,7 +31,7 @@ public class Order {
         return login;
     }
 
-    public List<Product> getOrderData() {
+    public Map<Product, Integer> getOrderData() {
         return orderData;
     }
 

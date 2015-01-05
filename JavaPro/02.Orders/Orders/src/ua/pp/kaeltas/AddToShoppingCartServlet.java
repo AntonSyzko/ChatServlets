@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kaeltas on 23.12.14.
@@ -22,14 +24,14 @@ public class AddToShoppingCartServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute("login") != null) {
-            List<Product> shoppingCartList = null;
-            if (session.getAttribute("shoppingCartList") != null) {
-                shoppingCartList = (List<Product>)session.getAttribute("shoppingCartList");
+            Map<Product, Integer> shoppingCartMap = null;
+            if (session.getAttribute("shoppingCartMap") != null) {
+                shoppingCartMap = (Map<Product, Integer>)session.getAttribute("shoppingCartMap");
             } else {
-                shoppingCartList = new ArrayList<Product>();
+                shoppingCartMap = new LinkedHashMap<Product, Integer>();
             }
 
-            if (shoppingCartList.size() < 10) {
+            if (shoppingCartMap.size() < 10) {
                 try {
                     Connection conn = MysqlConnectionFactory.createConnection();
                     PreparedStatement preparedStatement = null;
@@ -44,10 +46,14 @@ public class AddToShoppingCartServlet extends HttpServlet {
                             product.id = productid;
                             product.name = resultSet.getString(1);
                             product.price = resultSet.getString(2);
-                            shoppingCartList.add(product);
+                            if (shoppingCartMap.containsKey(product)) {
+                                shoppingCartMap.put(product, shoppingCartMap.get(product)+1);
+                            } else {
+                                shoppingCartMap.put(product, 1);
+                            }
                         }
 
-                        session.setAttribute("shoppingCartList", shoppingCartList);
+                        session.setAttribute("shoppingCartMap", shoppingCartMap);
                         //request.getRequestDispatcher("userpanel.jsp").forward(request, response);
                         response.sendRedirect("/userpanel");
                     } finally {

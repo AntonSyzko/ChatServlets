@@ -32,7 +32,7 @@
       <h4>Корзина</h4>
 
       <c:choose>
-        <c:when test="${empty shoppingCartList}">
+        <c:when test="${empty shoppingCartMap}">
           [пусто]
         </c:when>
         <c:otherwise>
@@ -41,26 +41,32 @@
             <tr>
               <th>№</th>
               <th>Название</th>
+              <th>Кол</th>
               <th>Цена</th>
-              <th>Удалить</th>
+              <th></th>
             </tr>
             </thead>
             <tbody>
             <c:set var="counter" value="1"></c:set>
             <c:set var="sum" value="0"></c:set>
-            <c:forEach items="${shoppingCartList}" var="product">
+            <c:forEach items="${shoppingCartMap}" var="product">
               <tr>
                 <td>${counter}</td>
-                <td>${product.name}</td>
-                <td>${product.price}</td>
+                <td>${product.key.name}</td>
+                <td>${product.value}</td>
+                <td>
+                  <fmt:setLocale value="en_US"/>
+                  <fmt:formatNumber maxFractionDigits="2" value="${product.key.price*product.value}"/>
+                </td>
                 <td><a href="/deletefromshoppingcart?productindex=${counter}"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a></td>
               </tr>
               <c:set var="counter" value="${counter+1}"></c:set>
-              <c:set var="sum" value="${sum+product.price}"></c:set>
+              <c:set var="sum" value="${sum+product.key.price*product.value}"></c:set>
             </c:forEach>
             <tr>
               <td></td>
               <td>Всего</td>
+              <td></td>
               <td>
                 <fmt:setLocale value="en_US"/>
                 <fmt:formatNumber maxFractionDigits="2" value="${sum}"/></td>

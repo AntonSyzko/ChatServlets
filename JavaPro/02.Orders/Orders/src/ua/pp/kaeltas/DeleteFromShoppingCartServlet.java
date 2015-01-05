@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kaeltas on 23.12.14.
@@ -22,16 +23,21 @@ public class DeleteFromShoppingCartServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (session.getAttribute("login") != null) {
             try {
-                List<Product> shoppingCartList = null;
-                if (session.getAttribute("shoppingCartList") != null) {
-                    shoppingCartList = (List<Product>) session.getAttribute("shoppingCartList");
+                Map<Product, Integer> shoppingCartMap = null;
+                if (session.getAttribute("shoppingCartMap") != null) {
+                    shoppingCartMap = (Map<Product, Integer>) session.getAttribute("shoppingCartMap");
                     int index = Integer.parseInt(request.getParameter("productindex"));
                     if (index > 0) {
-                        shoppingCartList.remove(index - 1);
+                        Product prodToDelete = (Product)(new ArrayList(shoppingCartMap.keySet())).get(index - 1);
+                        if (shoppingCartMap.get(prodToDelete) > 1) {
+                            shoppingCartMap.put(prodToDelete, shoppingCartMap.get(prodToDelete)-1);
+                        } else {
+                            shoppingCartMap.remove(prodToDelete);
+                        }
                     }
                 }
 
-                session.setAttribute("shoppingCartList", shoppingCartList);
+                session.setAttribute("shoppingCartMap", shoppingCartMap);
                 response.sendRedirect("/userpanel");
             } catch (NumberFormatException nfe) {
                 response.sendError(333, "Wrong parameter..");

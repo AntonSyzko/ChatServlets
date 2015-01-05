@@ -50,6 +50,14 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>ua.pp.kaeltas.DeleteProductServlet</servlet-class>
     </servlet>
+    <!--<servlet>
+        <servlet-name>AlterDbServlet</servlet-name>
+        <servlet-class>ua.pp.kaeltas.AlterDbServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AlterDbServlet</servlet-name>
+        <url-pattern>/alterdb</url-pattern>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>AddProductServlet</servlet-name>
         <url-pattern>/addproduct</url-pattern>

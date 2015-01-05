@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:if test="${sessionScope.isAdmin ne true}">
   <c:redirect url="/"/>
 </c:if>
@@ -45,7 +46,9 @@
 
                 <td>
                   <c:forEach items="${order.orderData}" var="product">
-                    ${product.name} ${product.price}<br>
+                    ${product.key.name} x ${product.value} Сумма=
+                    <fmt:setLocale value="en_US"/>
+                    <fmt:formatNumber maxFractionDigits="2" value="${product.key.price*product.value}"/><br>
                   </c:forEach>
                 </td>
                 <td><a href="/deleteorder?orderid=${order.id}"><span class="glyphicon glyphicon-minus"/></a></td>

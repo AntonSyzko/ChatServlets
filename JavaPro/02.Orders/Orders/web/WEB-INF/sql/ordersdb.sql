@@ -1,6 +1,3 @@
-
-CREATE DATABASE ordersdb CHARACTER SET utf8 COLLATE utf8_general_ci;
-
 CREATE TABLE `Order`
 (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,7 +11,8 @@ CREATE TABLE OrderData
 (
   id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   order_id INT NOT NULL,
-  product_id INT NOT NULL
+  product_id INT NOT NULL,
+  product_count INT NOT NULL
 );
 
 

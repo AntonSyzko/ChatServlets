@@ -12,8 +12,10 @@ public class MysqlConnectionFactory {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/ordersdb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "";
+    
+    //private Connection conn = null;
 
-    public synchronized static Connection createConnection() throws SQLException {
+    public synchronized static Connection createConnection() {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -35,5 +37,13 @@ public class MysqlConnectionFactory {
 
     private MysqlConnectionFactory() {
     }
+
+    /*public synchronized MysqlConnectionSingleton getInstance() throws ClassNotFoundException, SQLException {
+        if (mysqlConnectionSingleton == null) {
+            mysqlConnectionSingleton = new MysqlConnectionSingleton();
+        }
+
+        return mysqlConnectionSingleton;
+    }*/
 
 }
